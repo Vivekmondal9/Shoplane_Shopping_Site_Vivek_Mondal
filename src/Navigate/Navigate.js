@@ -25,7 +25,7 @@ function Navigate(){
     return(
         <div className="navigate-part">
             <span className="all" onClick={allProduct}>All</span>
-            <span className="electronics" onClick={electronics}>Electroncs</span>
+            <span className="electronics" onClick={electronics}>Electronics</span>
             <span className="jewelery" onClick={navtoJewel}>Jewelery</span>
             <span className="men-cloth" onClick={navtomen}>Men's Clothing</span>
             <span className="women-cloth" onClick={navtowomen}>Women's Clothing</span>
