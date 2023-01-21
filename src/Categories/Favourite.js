@@ -13,9 +13,15 @@ function Favourite(){
       nav("/",true);
     
     }
+    let cartit = localStorage.getItem("shoplanecart");
+    if (!cartit) {
+        cartit = [];
+    }
+    else {
+        cartit = JSON.parse(cartit);
+    }
     function handleSubmit(e) {
-        let prd;
-        console.log(e.target.id);
+
         let cartit = localStorage.getItem("shoplanecart");
         if (!cartit) {
             cartit = [];
@@ -48,6 +54,46 @@ function Favourite(){
         window.location.reload();
 
 
+    }
+    function pleaselog(){
+        alert("Please Login First!!");
+        nav("/login",true)
+    }
+    function logbeforesubmit(e){
+        let cartit = localStorage.getItem("shoplanecart");
+        
+        if (!cartit) {
+            cartit = [];
+        }
+        else {
+            cartit = JSON.parse(cartit);
+        }
+    
+        let flag = 0;
+        for (let i = 0; i < cartit.length; i++) {
+            if (JSON.stringify(cartit[i].id) == e.target.id) {
+                flag = 1;
+                cartit[i].QTY = cartit[i].QTY + 1;
+            }
+        }
+    
+    
+        if (flag == 0) {
+    
+            for (let i = 0; i < fav.length; i++) {
+                if (fav[i].id == e.target.id) {
+                    let record = JSON.stringify(fav[i]).substring(0, JSON.stringify(fav[i]).length - 1) + ",\"QTY\":1}";
+                    let recordCart = JSON.parse(record);
+                    cartit.push(recordCart);
+                }
+            }
+        }
+    
+        localStorage.setItem("shoplanecart", JSON.stringify(cartit));
+        alert("Please Login to Add Item in Cart");
+        nav("/login",true);
+        
+    
     }
 
 
@@ -96,6 +142,9 @@ function Favourite(){
     function pleaselog(){
         alert("Please Login First!!");
         nav("/login",true)
+    }
+    function gotocart(){
+        nav("/cart",true);
     }
 
     return (
@@ -150,7 +199,19 @@ function Favourite(){
                         <div className="price-sec">
                             <p className="price">$ {product.price}</p>
                         </div>
-                        <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
+                        {!loginDetails &&
+                            <button className="add-cart" id={"d" + product.id} onClick={logbeforesubmit}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
+                        }
+
+                        {loginDetails &&
+                            (<>
+                                {JSON.stringify(cartit).includes(JSON.stringify(product.title)) ?
+                                    <button className="already-in-cart" onClick={gotocart}><i className='fa fa-shopping-cart crt' />Item-in-Cart</button>
+                                    :
+                                    <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
+
+                                }
+                            </>)}
 
 
                     </div>)

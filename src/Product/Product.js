@@ -16,7 +16,7 @@ function Product(props) {
    
 
     let incart;
-    if((cartit.includes(JSON.stringify(product.title)))){
+    if((JSON.stringify(cartit).includes(JSON.stringify(product.title)))){
         incart=true;
     }
     else{
@@ -25,14 +25,6 @@ function Product(props) {
 
    
     function handleSubmit() {
-      
-
-        if (!cartit) {
-            cartit = [];
-        }
-        else {
-            cartit = JSON.parse(cartit);
-        }
 
         let flag = 0;
         for (let i = 0; i < cartit.length; i++) {
@@ -60,14 +52,7 @@ function Product(props) {
 
 
     function logbeforesubmit(){
-        
 
-        if (!cartit) {
-            cartit = [];
-        }
-        else {
-            cartit = JSON.parse(cartit);
-        }
         let flag = 0;
         for (let i = 0; i < cartit.length; i++) {
             if (JSON.stringify(product.id) == cartit[i].id) {

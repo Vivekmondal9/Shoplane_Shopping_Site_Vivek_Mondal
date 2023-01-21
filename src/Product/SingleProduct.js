@@ -14,6 +14,12 @@ function Singleproduct(){
     let singleprd=localStorage.getItem("selectedproduct");
     singleprd=JSON.parse(singleprd);
     let cartit = localStorage.getItem("shoplanecart");
+    if (!cartit) {
+        cartit = [];
+    }
+    else {
+        cartit = JSON.parse(cartit);
+    }
     function handleSubmit(e) {
         // let prd;
         // console.log(e.target.id);
@@ -114,6 +120,7 @@ function Singleproduct(){
         nav("/login",true)
     }
     function logbeforesubmit(e){
+        let cartit = localStorage.getItem("shoplanecart");
         
         if (!cartit) {
             cartit = [];
@@ -208,7 +215,7 @@ function Singleproduct(){
 
                         {loginDetails &&
                             (<>
-                                {cartit.includes(JSON.stringify(product.title)) ?
+                                {JSON.stringify(cartit).includes(JSON.stringify(product.title)) ?
                                     <button className="already-in-cart" onClick={gotocart}><i className='fa fa-shopping-cart crt' />Item-in-Cart</button>
                                     :
                                     <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>

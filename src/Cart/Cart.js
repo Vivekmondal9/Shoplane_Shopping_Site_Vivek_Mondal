@@ -40,14 +40,21 @@ function Cart() {
  //for the work of quantity "-" button...
     function addItem(e) {
         for (let i = 0; i < cartt.length; i++) {
-          if (JSON.stringify(cartt[i].id) == e.target.id) {
+          if (JSON.stringify(cartt[i].id) == e.target.id ) {
+
+            if(cartt[i].QTY<5){
             cartt[i].QTY += 1;
     
             localStorage.setItem("shoplanecart", JSON.stringify(cartt))
             window.location.reload();
+            }
+            else{
+              alert("Can Not Add More Than 5 Items!!")
+            }
     
     
           }
+        
         }
     
       }

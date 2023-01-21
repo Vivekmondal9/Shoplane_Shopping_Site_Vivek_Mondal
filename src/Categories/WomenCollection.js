@@ -20,8 +20,16 @@ function WomenCollection() {
     
 
     let cartit = localStorage.getItem("shoplanecart");
+    if (!cartit) {
+        cartit = [];
+    }
+    else {
+        cartit = JSON.parse(cartit);
+    }
+
     // Function for add items to cart..
     function handleSubmit(e) {
+        let cartit = localStorage.getItem("shoplanecart");
         
 
         if (!cartit) {
@@ -132,6 +140,7 @@ function WomenCollection() {
     }
 
     function logbeforesubmit(e){
+        let cartit = localStorage.getItem("shoplanecart");
         
         if (!cartit) {
             cartit = [];
@@ -227,7 +236,7 @@ function WomenCollection() {
 
                         {loginDetails &&
                             (<>
-                                {cartit.includes(JSON.stringify(product.title)) ?
+                                {JSON.stringify(cartit).includes(JSON.stringify(product.title)) ?
                                     <button className="already-in-cart" onClick={gotocart}><i className='fa fa-shopping-cart crt' />Item-in-Cart</button>
                                     :
                                     <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>

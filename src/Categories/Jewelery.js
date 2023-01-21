@@ -19,7 +19,14 @@ function JeweleryCollection() {
     jewel = products.filter(a => a.category == "jewelery");
     // console.log(jewel);
     let cartit = localStorage.getItem("shoplanecart");
+    if (!cartit) {
+        cartit = [];
+    }
+    else {
+        cartit = JSON.parse(cartit);
+    }
     function handleSubmit(e) {
+        let cartit = localStorage.getItem("shoplanecart");
 
         
 
@@ -150,6 +157,7 @@ function pleaselog(){
     nav("/login",true)
 }
 function logbeforesubmit(e){
+    let cartit = localStorage.getItem("shoplanecart");
         
     if (!cartit) {
         cartit = [];
@@ -244,7 +252,7 @@ function gotocart(){
 
                         {loginDetails &&
                             (<>
-                                {cartit.includes(JSON.stringify(product.title)) ?
+                                {JSON.stringify(cartit).includes(JSON.stringify(product.title)) ?
                                     <button className="already-in-cart" onClick={gotocart}><i className='fa fa-shopping-cart crt' />Item-in-Cart</button>
                                     :
                                     <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>

@@ -27,17 +27,27 @@ function Electronics() {
     //Function For adding product to Cart.
     
     let cartit = localStorage.getItem("shoplanecart");
+         
+    if (!cartit) {
+        cartit = [];
+    }
+    else {
+        cartit = JSON.parse(cartit);
+    }
 
 
     function handleSubmit(e) {
-
-       
+        let cartit = localStorage.getItem("shoplanecart");
+         
         if (!cartit) {
             cartit = [];
         }
         else {
             cartit = JSON.parse(cartit);
         }
+    
+
+  
 
         let flag = 0;
         for (let i = 0; i < cartit.length; i++) {
@@ -68,13 +78,7 @@ function Electronics() {
     // This function is for Show individual Product
 
     function Showindividual(e) {
-        let prdct = localStorage.getItem("selectedproduct");
-        if (!prdct) {
-            prdct = [];
-        }
-        else {
-            prdct = JSON.parse(prdct);
-        }
+    
 
         let p = [];
 
@@ -145,14 +149,9 @@ function Electronics() {
         nav("/login", true)
     }
     function logbeforesubmit(e){
+        let cartit = localStorage.getItem("shoplanecart");
         
-        if (!cartit) {
-            cartit = [];
-        }
-        else {
-            cartit = JSON.parse(cartit);
-        }
-
+  
         let flag = 0;
         for (let i = 0; i < cartit.length; i++) {
             if (JSON.stringify(cartit[i].id) == e.target.id) {
@@ -243,7 +242,7 @@ function Electronics() {
 
                         {loginDetails &&
                             (<>
-                                {cartit.includes(JSON.stringify(product.title)) ?
+                                {JSON.stringify(cartit).includes(JSON.stringify(product.title)) ?
                                     <button className="already-in-cart" onClick={gotocart}><i className='fa fa-shopping-cart crt' />Item-in-Cart</button>
                                     :
                                     <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
