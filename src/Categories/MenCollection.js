@@ -17,8 +17,10 @@ function Mencollection() {
     }, [])
     let menCloth;
     menCloth = products.filter(a => a.category == "men's clothing");
+    let cartit = localStorage.getItem("shoplanecart");
+
     function handleSubmit(e) {
-        let cartit = localStorage.getItem("shoplanecart");
+
 
         if (!cartit) {
             cartit = [];
@@ -131,6 +133,45 @@ function Mencollection() {
         alert("Please Login First!!");
         nav("/login",true)
     }
+
+    function logbeforesubmit(e){
+        
+        if (!cartit) {
+            cartit = [];
+        }
+        else {
+            cartit = JSON.parse(cartit);
+        }
+    
+        let flag = 0;
+        for (let i = 0; i < cartit.length; i++) {
+            if (JSON.stringify(cartit[i].id) == e.target.id) {
+                flag = 1;
+                cartit[i].QTY = cartit[i].QTY + 1;
+            }
+        }
+    
+    
+        if (flag == 0) {
+    
+            for (let i = 0; i < menCloth.length; i++) {
+                if (menCloth[i].id == e.target.id) {
+                    let record = JSON.stringify(menCloth[i]).substring(0, JSON.stringify(menCloth[i]).length - 1) + ",\"QTY\":1}";
+                    let recordCart = JSON.parse(record);
+                    cartit.push(recordCart);
+                }
+            }
+        }
+    
+        localStorage.setItem("shoplanecart", JSON.stringify(cartit));
+        alert("Please Login to Add Item in Cart");
+        nav("/login",true);
+        
+    
+    }
+    function gotocart(){
+        nav("/cart",true);
+    }
     return (
         <div>
             <Header></Header>
@@ -184,7 +225,19 @@ function Mencollection() {
                         <div className="price-sec">
                             <p className="price">$ {product.price}</p>
                         </div>
-                        <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
+                        {!loginDetails &&
+                            <button className="add-cart" id={"d" + product.id} onClick={logbeforesubmit}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
+                        }
+
+                        {loginDetails &&
+                            (<>
+                                {cartit.includes(JSON.stringify(product.title)) ?
+                                    <button className="already-in-cart" onClick={gotocart}><i className='fa fa-shopping-cart crt' />Item-in-Cart</button>
+                                    :
+                                    <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
+
+                                }
+                            </>)}
 
 
                     </div>)

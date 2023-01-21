@@ -25,11 +25,13 @@ function Electronics() {
 
 
     //Function For adding product to Cart.
+    
+    let cartit = localStorage.getItem("shoplanecart");
+
 
     function handleSubmit(e) {
-        let prd;
-        console.log(e.target.id);
-        let cartit = localStorage.getItem("shoplanecart");
+
+       
         if (!cartit) {
             cartit = [];
         }
@@ -83,7 +85,7 @@ function Electronics() {
 
             }
         }
-         localStorage.setItem("selectedproduct", JSON.stringify(p));
+        localStorage.setItem("selectedproduct", JSON.stringify(p));
         nav("/selectedproduct");
     }
 
@@ -104,28 +106,28 @@ function Electronics() {
             e.target.className = "fa fa-heart red-color";
             alert("Item added To Favourites.");
 
-            for(let i=0;i<elec.length;i++){
-                if(elec[i].id==e.target.id){
+            for (let i = 0; i < elec.length; i++) {
+                if (elec[i].id == e.target.id) {
                     fav.push(elec[i]);
                 }
             }
 
-            localStorage.setItem("favitems",JSON.stringify(fav))
+            localStorage.setItem("favitems", JSON.stringify(fav))
         }
         else {
             e.target.className = "fa fa-heart gray-color";
             alert("Item remove from Favourites.");
 
-            for(let i=0;i<fav.length;i++){
-                if(e.target.id==fav[i].id){
-                    point=i;
+            for (let i = 0; i < fav.length; i++) {
+                if (e.target.id == fav[i].id) {
+                    point = i;
                     break;
 
                 }
             }
 
-            fav.splice(point,1);
-            localStorage.setItem("favitems",JSON.stringify(fav))
+            fav.splice(point, 1);
+            localStorage.setItem("favitems", JSON.stringify(fav))
 
 
         }
@@ -138,10 +140,49 @@ function Electronics() {
 
 
 
-    function pleaselog(){
+    function pleaselog() {
         alert("Please Login First!!");
-        nav("/login",true)
+        nav("/login", true)
     }
+    function logbeforesubmit(e){
+        
+        if (!cartit) {
+            cartit = [];
+        }
+        else {
+            cartit = JSON.parse(cartit);
+        }
+
+        let flag = 0;
+        for (let i = 0; i < cartit.length; i++) {
+            if (JSON.stringify(cartit[i].id) == e.target.id) {
+                flag = 1;
+                cartit[i].QTY = cartit[i].QTY + 1;
+            }
+        }
+
+
+        if (flag == 0) {
+
+            for (let i = 0; i < elec.length; i++) {
+                if (elec[i].id == e.target.id) {
+                    let record = JSON.stringify(elec[i]).substring(0, JSON.stringify(elec[i]).length - 1) + ",\"QTY\":1}";
+                    let recordCart = JSON.parse(record);
+                    cartit.push(recordCart);
+                }
+            }
+        }
+
+        localStorage.setItem("shoplanecart", JSON.stringify(cartit));
+        alert("Please Login to Add Item in Cart");
+        nav("/login",true);
+        
+
+    }
+    function gotocart(){
+        nav("/cart",true);
+    }
+
 
     return (
         <div>
@@ -156,15 +197,15 @@ function Electronics() {
                             <div className="fav-part" id={`fav-heart-${product.id}`}><i className="fa fa-heart gray-color" id={product.id} onClick={pleaselog}></i></div>
                         }
                         {loginDetails &&
-                        (<> {
-                            JSON.stringify(fav).includes(JSON.stringify(product)) ?
-                                <div className="fav-part" key={i} id={`fav-heart-${product.id}`}><i className="fa fa-heart red-color" id={product.id} onClick={favClicked}></i></div>
-                                :
+                            (<> {
+                                JSON.stringify(fav).includes(JSON.stringify(product)) ?
+                                    <div className="fav-part" key={i} id={`fav-heart-${product.id}`}><i className="fa fa-heart red-color" id={product.id} onClick={favClicked}></i></div>
+                                    :
 
-                                <div className="fav-part" key={i} id={`fav-heart-${product.id}`}><i className="fa fa-heart gray-color" id={product.id} onClick={favClicked}></i></div>
+                                    <div className="fav-part" key={i} id={`fav-heart-${product.id}`}><i className="fa fa-heart gray-color" id={product.id} onClick={favClicked}></i></div>
 
-                        }</>)}
-                       
+                            }</>)}
+
                         <img src={product.image} id={product.id} className="card-img-top" alt="LoadImage" onClick={Showindividual}></img>
                         <h5 className="product-title" id={product.id} onClick={Showindividual}>{product.title}</h5>
                         <div className="ratings" id={product.id}>
@@ -195,7 +236,20 @@ function Electronics() {
                         <div className="price-sec">
                             <p className="price">$ {product.price}</p>
                         </div>
-                        <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
+                        {/* <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button> */}
+                        {!loginDetails &&
+                            <button className="add-cart" id={"d" + product.id} onClick={logbeforesubmit}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
+                        }
+
+                        {loginDetails &&
+                            (<>
+                                {cartit.includes(JSON.stringify(product.title)) ?
+                                    <button className="already-in-cart" onClick={gotocart}><i className='fa fa-shopping-cart crt' />Item-in-Cart</button>
+                                    :
+                                    <button className="add-cart" onClick={handleSubmit} id={product.id}><i className='fa fa-shopping-cart crt' />Add-to-cart</button>
+
+                                }
+                            </>)}
 
 
                     </div>)

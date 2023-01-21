@@ -98,9 +98,38 @@
     border-radius: 5px;
     padding: 5px;
 }
+.already-in-cart{
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    gap: 5px;
+    border: none;
+    background-color: orange;
+    color: azure;
+    border-radius: 5px;
+    padding: 5px;
+
+}
 .men-cloth,.women-cloth,.jewelery,.electronics,.all{
     font-size:1em;
 }
+/* .go-cart{
+    cursor: pointer;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    gap: 5px;
+    border: none;
+    background-color:green;
+    color: azure;
+    border-radius: 5px;
+    padding: 5px;
+    display: none;
+} */
 
 @media only screen and (max-width:700px){
 .men-cloth,.women-cloth,.jewelery,.electronics,.all{
