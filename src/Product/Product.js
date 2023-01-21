@@ -7,6 +7,12 @@ function Product(props) {
     let product = props.items;
     let favourite = props.favourite;
     let cartit = localStorage.getItem("shoplanecart");
+    if (!cartit) {
+        cartit = [];
+    }
+    else {
+        cartit = JSON.parse(cartit);
+    }
    
 
     let incart;
