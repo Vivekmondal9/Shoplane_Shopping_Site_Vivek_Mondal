@@ -66,11 +66,7 @@ function JeweleryCollection() {
 
      // This function is for Show individual Product
     function Showindividual(e) {
-        console.log(e.target.id);
-  
-
-        
-            let prdct = localStorage.getItem("sjeweltedproduct");
+            let prdct = localStorage.getItem("selectedproduct");
             if (!prdct) {
                 prdct = [];
             }
@@ -91,8 +87,8 @@ function JeweleryCollection() {
 
             
        
-            localStorage.setItem("sjeweltedproduct", JSON.stringify(p));
-            nav("/sjeweltedproduct");
+            localStorage.setItem("selectedproduct", JSON.stringify(p));
+            nav("/selectedproduct");
         
 
 
