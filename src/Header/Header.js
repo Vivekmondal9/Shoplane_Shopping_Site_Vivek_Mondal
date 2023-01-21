@@ -36,9 +36,17 @@ function Header(props) {
         localStorage.removeItem("logdata");
     }
 
-    function logcount(){
+    function logcount() {
         alert("Please Login to view Your cart!!")
-        nav("/login",true);
+        nav("/login", true);
+    }
+    function myFunction() {
+        var x = document.getElementById("myLinks");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
     }
 
 
@@ -76,31 +84,31 @@ function Header(props) {
 
 
 
-                    </div>
+                </div>
 
 
 
 
 
-                    {loginDetails &&
+                {loginDetails &&
                     (<>
-                    <div className="cart-sign">
-                    <i className='fa fa-shopping-cart crt' onClick={toCount}></i>
-                    <span className="small-cart"  onClick={toCount}>&#128722;</span>
-                    <span className="count">{count}</span>
-                    </div>
+                        <div className="cart-sign">
+                            <i className='fa fa-shopping-cart crt' onClick={toCount}></i>
+                            <span className="small-cart" onClick={toCount}>&#128722;</span>
+                            <span className="count">{count}</span>
+                        </div>
                     </>)
-                    }
+                }
 
-                    {!loginDetails &&
+                {!loginDetails &&
                     (<>
-                    <div className="cart-sign">
-                    <i className='fa fa-shopping-cart crt' onClick={logcount}></i>
-                    <span className="small-cart"  onClick={logcount}>&#128722;</span>
-                    {/* <span className="count">0</span> */}
-                    </div>
+                        <div className="cart-sign">
+                            <i className='fa fa-shopping-cart crt' onClick={logcount}></i>
+                            <span className="small-cart" onClick={logcount}>&#128722;</span>
+                            {/* <span className="count">0</span> */}
+                        </div>
                     </>)
-                    }
+                }
             </div>
         </div>
 

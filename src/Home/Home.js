@@ -59,6 +59,13 @@ function Home() {
     else {
         fav = JSON.parse(fav);
     }
+    let cartit = localStorage.getItem("shoplanecart");
+    if (!cartit) {
+        cartit = [];
+    }
+    else {
+        cartit = JSON.parse(cartit);
+    }
 
 
    
@@ -74,8 +81,8 @@ function Home() {
                     
                     (<div key={i} className="col-md-3">
                         {
-                        JSON.stringify(fav).includes(JSON.stringify(p))?
-                         <Product key={i} items={p} notify={notifyhome} favourite="true"></Product>
+                        JSON.stringify(fav).includes(JSON.stringify(p)) ?
+                         <Product key={i} items={p} notify={notifyhome} favourite="true" ></Product>
                         :
                         <Product key={i} items={p} notify={notifyhome} favourite="false"></Product>
                         }
