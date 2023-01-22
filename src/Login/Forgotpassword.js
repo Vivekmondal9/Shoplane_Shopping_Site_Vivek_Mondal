@@ -41,7 +41,14 @@ function Forgotpassword() {
 
     function submitted(e) {
         let sdata = localStorage.getItem("signedup");
-        sdata = JSON.parse(sdata);
+
+        if(!sdata){
+            sdata=[];
+        }
+        else{
+            sdata = JSON.parse(sdata);
+        }
+        
         let point;
         let flag = false;
 
