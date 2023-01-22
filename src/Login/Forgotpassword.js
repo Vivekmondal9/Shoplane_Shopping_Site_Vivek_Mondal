@@ -54,14 +54,13 @@ function Forgotpassword() {
         }
 
         if(flag==true){
-            // alert("Hello");
-            // localStorage.removeItem("signedup");
-          
+           
 
             sdata.splice(point,1,e);
             localStorage.removeItem("signedup");
             let frshdata=localStorage.getItem("signedup");
             localStorage.setItem("signedup",JSON.stringify(sdata));
+            alert("Your Password has been Successfully Changed...");
 
            
 

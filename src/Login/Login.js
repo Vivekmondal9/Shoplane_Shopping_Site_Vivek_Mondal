@@ -55,7 +55,7 @@ function Login() {
                             localStorage.setItem("logdata", JSON.stringify(fd));
                         }
                         else {
-                            alert("You have Enered wrong password!!! Please Try Again...");
+                            alert("You have Enered an invalid username or password!!!");
                         }
                     }
                 }
